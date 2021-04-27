@@ -11,28 +11,26 @@ namespace Equipamentos_OO
         static void Main(string[] args)
         {
 
-            
-            string nome, fabricante;
-            double precoAquisicao;
-            int nSerie;
-            DateTime dataFabricacao;
+            double precoAquisicao, precoAquisicaoEditado;
+            int nSerie, nSerieEditado;
+            DateTime dataFabricacao, dataFabricacaoEditado, dataAbertura, dataAberturaEditado;
+            string fabricante, fabricanteEditado, tituloChamado, descricaoChamado, tituloChamadoEditado, descricaoChamadoEditado;
+
+            //nome que será utilizado, tanto na criaçao do chamado, quanto na edição do chamado
             string nomeEquipamento = " ";
 
+            //objetos
             ControladorEquipamentos controladorEquipamentos = new ControladorEquipamentos();
             ControladorChamados controladorChamados = new ControladorChamados();
-
+            Menus menu = new Menus();
+            Validadora valida = new Validadora();
             while (true)
             {
-
                 //Menu principal
-                Console.WriteLine("Digite 1 para ir aos equipamentos: ");
-                Console.WriteLine("Digite 2 para ir aos chamados: ");
-                Console.WriteLine("Digite s para sair: ");
-                string opcao = Console.ReadLine();
-
+                string opcao = menu.MenuPrincipal();
                 Console.Clear();
 
-                if(opcao.Equals("s", StringComparison.OrdinalIgnoreCase))
+                if (opcao.Equals("s", StringComparison.OrdinalIgnoreCase))
                 {
                     break;
                 }
@@ -41,89 +39,50 @@ namespace Equipamentos_OO
                 {
                     case "1":
                         //Menu equipamentos
-                        Console.WriteLine("Digite 1 para registrar equipamento: ");
-                        Console.WriteLine("Digite 2 para visualizar equipamento: ");
-                        Console.WriteLine("Digite 3 para editar equipamento: ");
-                        Console.WriteLine("Digite 4 para excluir equipamento: ");
-
-                        string opcaoEqui = Console.ReadLine();
+                        string opcaoEqui = menu.MenuEquipamentos();
                         Console.Clear();
-
 
                         switch (opcaoEqui)
                         {
                             case "1":
-                                Console.WriteLine("Digite o nome do equipmaneto: ");
-                                nome = Console.ReadLine();
+                                string nome = valida.ValidaNomeEquipamento();
 
-                                while (nome.Length < 6)
-                                {
-                                    Console.WriteLine("Nome inválido, digite novamente, no minimo 6 caracteres.");
-                                    Console.WriteLine("Insira o nome do equipamento: ");
-                                    nome = Console.ReadLine();
-                                }
-
-                                Console.WriteLine("Digite o preço de aquisição do equipamento: ");
-                                precoAquisicao = Convert.ToDouble(Console.ReadLine());
-
-                                Console.WriteLine("Digite o número de série do equipamento: ");
-                                nSerie = Convert.ToInt32(Console.ReadLine());
-
-                                Console.WriteLine("Digite a data de fabricaçao do equipamento no formato dd/MM/yyyy: ");
-                                dataFabricacao = Convert.ToDateTime(Console.ReadLine());
-
-                                Console.WriteLine("Digite o fabricante do equipamento: ");
-                                fabricante = Console.ReadLine();
+                                valida.RegistroInformacoesEqui(out precoAquisicao, out nSerie, out dataFabricacao, out fabricante);
 
                                 Equipamento equipamento = new Equipamento(nome, precoAquisicao, nSerie, dataFabricacao, fabricante);
-                                controladorEquipamentos.InsereEquipamnetos(equipamento);
+                                controladorEquipamentos.InsereEquipamentos(equipamento);
 
                                 Console.ReadLine();
                                 Console.Clear();
                                 break;
 
                             case "2":
-                                controladorEquipamentos.VisualizaEquipamnetos();
+
+                                controladorEquipamentos.VisualizaEquipamentos();
                                 Console.ReadLine();
                                 Console.Clear();
                                 break;
 
                             case "3":
-                                controladorEquipamentos.VisualizaEquipamnetos();
+                                controladorEquipamentos.VisualizaEquipamentos();
 
                                 Console.WriteLine("Digite o id do equipamento que deseja editar: ");
                                 int idEditar = Convert.ToInt32(Console.ReadLine());
                                 Console.Clear();
 
-                                Console.WriteLine("Insira o nome do equipamento: ");
-                                string nomeEditado = Console.ReadLine();
+                                string nomeEditado = valida.ValidaNomeEquipamento();
 
-                                while (nomeEditado.Length < 6)
-                                {
-                                    Console.WriteLine("Nome inválido, digite novamente, no minimo 6 caracteres.");
-                                    Console.WriteLine("Insira o nome do equipamento: ");
-                                    nomeEditado = Console.ReadLine();
-                                }
-
-                                Console.WriteLine("Insira o preço de aquisição: ");
-                                double precoAquisicaoEditado = Convert.ToDouble(Console.ReadLine());
-                                Console.WriteLine("Insira o número de série: ");
-                                int nSerieEditado = Convert.ToInt32(Console.ReadLine());
-
-                                Console.WriteLine("Insira a data: ");
-                                DateTime dataFabricacaoEditado = Convert.ToDateTime(Console.ReadLine());
-                                Console.WriteLine("Insira o fabricante: ");
-                                string fabricanteEditado = Console.ReadLine();
+                                valida.RegistroInformacoesEqui(out precoAquisicaoEditado, out nSerieEditado, out dataFabricacaoEditado, out fabricanteEditado);
 
                                 Equipamento eEditado = new Equipamento(nomeEditado, precoAquisicaoEditado, nSerieEditado, dataFabricacaoEditado, fabricanteEditado);
-
                                 controladorEquipamentos.EditarEquipamentos(idEditar, eEditado);
+
                                 Console.ReadLine();
                                 Console.Clear();
                                 break;
 
                             case "4":
-                                controladorEquipamentos.VisualizaEquipamnetos();
+                                controladorEquipamentos.VisualizaEquipamentos();
 
                                 Console.WriteLine("Digite o id do equipamento que deseja excluir: ");
                                 int idExcluir = Convert.ToInt32(Console.ReadLine());
@@ -136,20 +95,15 @@ namespace Equipamentos_OO
                         }
 
                         break;
-                    case "2":
-                        //Menu chamados
-                        Console.WriteLine("Digite 1 para registrar chamado: ");
-                        Console.WriteLine("Digite 2 para visualizar chamado: ");
-                        Console.WriteLine("Digite 3 para editar chamado: ");
-                        Console.WriteLine("Digite 4 para excluir chamado: ");
 
-                        string opcaoChamado = Console.ReadLine();
+                    case "2":
+                        string opcaoChamado = menu.MenuChamados();
                         Console.Clear();
 
                         switch (opcaoChamado)
                         {
                             case "1":
-                                controladorEquipamentos.VisualizaEquipamnetos();
+                                controladorEquipamentos.VisualizaEquipamentos();
 
                                 Console.WriteLine("Digite o id do equipamento que deseja realizar o chamado: ");
                                 int idEquipamentoChamado = Convert.ToInt32(Console.ReadLine());
@@ -157,16 +111,11 @@ namespace Equipamentos_OO
 
                                 nomeEquipamento = controladorChamados.AdicionaNomeEquipamento(idEquipamentoChamado, controladorEquipamentos.ArrayEquipamentos, controladorEquipamentos.Ids);
 
-                                Console.WriteLine("Insira o titulo do chamado: ");
-                                string tituloChamado = Console.ReadLine();
+                               
 
-                                Console.WriteLine("Insira a descrição do chamado: ");
-                                string descricaoChamado = Console.ReadLine();
+                                valida.RegistroInformacoesChamado(out tituloChamado, out descricaoChamado, out dataAbertura);
 
-                                Console.WriteLine("Digite a data de abertura do chamado no formato dd/MM/yyyy: ");
-                                dataFabricacao = Convert.ToDateTime(Console.ReadLine());
-
-                                Chamado chamado = new Chamado(tituloChamado, descricaoChamado, nomeEquipamento, dataFabricacao);
+                                Chamado chamado = new Chamado(tituloChamado, descricaoChamado, nomeEquipamento, dataAbertura);
                                 controladorChamados.InsereChamado(chamado);
 
                                 Console.ReadLine();
@@ -186,20 +135,13 @@ namespace Equipamentos_OO
                                 int idEditar = Convert.ToInt32(Console.ReadLine());
                                 Console.Clear();
 
-                                
+                                valida.RegistroInformacoesChamado(out tituloChamadoEditado, out descricaoChamadoEditado, out dataAberturaEditado);
 
-                                Console.WriteLine("EDITAR CHAMADO: ");
-                                Console.WriteLine("Titulo do chamado: ");
-                                string tituloChamadoEditado = Console.ReadLine();
-                                Console.WriteLine("Descrição do chamado: ");
-                                string descricaoChamadoEditado = Console.ReadLine();
-                                Console.WriteLine("Data de abertura do chamado: ");
-                                DateTime dataChamadoEditado = Convert.ToDateTime(Console.ReadLine());
                                 Console.Clear();
 
-                                Chamado chamadoEditado = new Chamado(tituloChamadoEditado, descricaoChamadoEditado, nomeEquipamento, dataChamadoEditado);
-
+                                Chamado chamadoEditado = new Chamado(tituloChamadoEditado, descricaoChamadoEditado, nomeEquipamento, dataAberturaEditado);
                                 controladorChamados.EditaChamado(idEditar, chamadoEditado);
+
                                 Console.ReadLine();
                                 Console.Clear();
                                 break;
@@ -216,24 +158,10 @@ namespace Equipamentos_OO
                                 Console.Clear();
                                 break;
                         }
+
                         break;
                 }
-
-
-
-               
             }
-           
-
-            
-
-
-
-
-
-
-
-
         }
     }
 }

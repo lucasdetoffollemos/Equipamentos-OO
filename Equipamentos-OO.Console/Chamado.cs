@@ -43,7 +43,7 @@ namespace Equipamentos_OO
 
         public override string ToString()
         {
-            return "Título chamado: " + TituloChamado + "\nDescrição chamado: " + DescricaoChamado + "\nEquipamento: " + Equipamento + "\nData de Fabricação: " + DataAabertura.ToString("dd/MM/yyyy") + "\nNúmero de dias em aberto: " + DataEmAberto();
+            return "Título chamado: " + TituloChamado + "\nDescrição chamado: " + DescricaoChamado + "\nEquipamento: " + Equipamento + "\nData de Abertura: " + DataAabertura.ToString("dd/MM/yyyy") + "\nNúmero de dias em aberto: " + DataEmAberto();
         }
     }
 }

@@ -14,6 +14,9 @@ namespace Equipamentos_OO
         private string[] nomesEquipamento = new string[100];
         private int[] ids = new int[100];
 
+        internal Chamado[] ArrayChamados { get => arrayChamados; set => arrayChamados = value; }
+        public string[] NomesEquipamento { get => nomesEquipamento; set => nomesEquipamento = value; }
+        public int[] Ids { get => ids; set => ids = value; }
 
         public string AdicionaNomeEquipamento(int idEquipamento, Equipamento [] equipamento, int [] idsEquipamento)
         {
@@ -24,8 +27,8 @@ namespace Equipamentos_OO
                 {
                     if(idEquipamento == idsEquipamento[i])
                     {
-                        nomesEquipamento[i] = equipamento[i].Nome;
-                        nomeEquipamento = nomesEquipamento[i];
+                        NomesEquipamento[i] = equipamento[i].Nome;
+                        nomeEquipamento = NomesEquipamento[i];
                     }
                 }
             }
@@ -35,8 +38,8 @@ namespace Equipamentos_OO
 
         public void InsereChamado(Chamado c)
         {
-            arrayChamados[cont] = c;
-            ids[cont] = id;
+            ArrayChamados[cont] = c;
+            Ids[cont] = id;
             cont++;
             id++;
         }
@@ -45,11 +48,11 @@ namespace Equipamentos_OO
         {
             Console.WriteLine("LISTA DOS CHAMADOS: ");
             Console.WriteLine("");
-            for (int i = 0; i < arrayChamados.Length; i++)
+            for (int i = 0; i < ArrayChamados.Length; i++)
             {
-                if (arrayChamados[i] != null)
+                if (ArrayChamados[i] != null)
                 {
-                    Console.WriteLine("Id " + ids[i] + "\n" + arrayChamados[i]);
+                    Console.WriteLine("Id " + Ids[i] + "\n" + ArrayChamados[i]);
                     Console.WriteLine("----------------");
                 }
             }
@@ -57,14 +60,14 @@ namespace Equipamentos_OO
 
         public void EditaChamado(int id, Chamado chamadoEditado)
         {
-            for (int i = 0; i < arrayChamados.Length; i++)
+            for (int i = 0; i < ArrayChamados.Length; i++)
             {
-                if (arrayChamados[i] != null)
+                if (ArrayChamados[i] != null)
                 {
-                    if (ids[i] == id)
+                    if (Ids[i] == id)
                     {
                         //logic
-                        arrayChamados.SetValue(chamadoEditado, i);
+                        ArrayChamados.SetValue(chamadoEditado, i);
                     }
                 }
             }
@@ -72,15 +75,15 @@ namespace Equipamentos_OO
 
         public void ExcluiChamado(int id)
         {
-            for (int i = 0; i < arrayChamados.Length; i++)
+            for (int i = 0; i < ArrayChamados.Length; i++)
             {
-                if (arrayChamados[i] != null)
+                if (ArrayChamados[i] != null)
                 {
-                    if (ids[i] == id)
+                    if (Ids[i] == id)
                     {
                         //logic
-                        arrayChamados = arrayChamados.Where(val => val != arrayChamados[i]).ToArray();
-                        ids = ids.Where(val => val != ids[i]).ToArray();
+                        ArrayChamados = ArrayChamados.Where(val => val != ArrayChamados[i]).ToArray();
+                        Ids = Ids.Where(val => val != Ids[i]).ToArray();
                     }
                 }
             }

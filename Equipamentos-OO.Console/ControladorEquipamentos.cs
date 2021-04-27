@@ -16,7 +16,7 @@ namespace Equipamentos_OO
         public Equipamento[] ArrayEquipamentos { get => arrayEquipamentos; set => arrayEquipamentos = value; }
         public int[] Ids { get => ids; set => ids = value; }
 
-        public void InsereEquipamnetos(Equipamento e)
+        public void InsereEquipamentos(Equipamento e)
         {
             ArrayEquipamentos[cont] = e;
             Ids[cont] = id;
@@ -24,7 +24,7 @@ namespace Equipamentos_OO
             id++;
             
         }
-        public void VisualizaEquipamnetos()
+        public void VisualizaEquipamentos()
         {
             Console.WriteLine("LISTA DOS EQUIPAMENTOS: ");
             Console.WriteLine("");
